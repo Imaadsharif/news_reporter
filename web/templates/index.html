@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multi-Agent News Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>📰 Multi-Agent News Generator</h2>
+
+    <form method="POST">
+        <input type="text" name="topic" placeholder="Enter topic..." required>
+        <button type="submit">Generate</button>
+    </form>
+
+    <div id="loader" class="loader-wrapper" style="display: none;">
+    <div class="spinner"></div>
+    <p>Generating news article, please wait...</p>
+    </div>
+
+
+
+    {% if error %}
+        <p class="error">❌ {{ error }}</p>
+    {% endif %}
+
+    {% if result %}
+        <div class="section research">
+            <h3>🔍 Research Agent Output</h3>
+            <div class="output">{{ result.research | safe }}</div>
+        </div>
+
+        <div class="section summary">
+            <h3>📌 Summarizer Agent Output</h3>
+            <div class="output">{{ result.summary | safe }}</div>
+        </div>
+
+        <div class="section final">
+            <h3>📰 Writer Agent Output</h3>
+            <div class="output">{{ result.final | safe }}</div>
+        </div>
+    {% endif %}
+
+</div>
+<script>
+    const form = document.getElementById("newsForm");
+    const loader = document.getElementById("loader");
+
+    form.addEventListener("submit", function () {
+        loader.style.display = "flex";
+    });
+</script>
+</body>
+</html>
